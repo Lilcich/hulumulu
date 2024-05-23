@@ -1,0 +1,43 @@
+SELECT orders.order_id, customers.customer_name
+FROM orders
+JOIN customers
+ON orders.customer_id = customers.customer_id;
+SELECT DISTINCT f.airline_id, a.name
+FROM flights AS f
+JOIN airports AS a ON f.from_id = a.id
+WHERE a.city = 'Vladivostok';
+SELECT DISTINCT t.city
+FROM tickets AS t
+JOIN flights AS f ON t.flight_id = f.id
+WHERE t.passenger_id = (
+  SELECT passenger_id
+  FROM passengers
+  WHERE name = 'Bruce Willis'
+);
+SELECT f.arrival_date, f.arrival_time
+FROM tickets AS t
+JOIN flights AS f ON t.flight_id = f.id
+WHERE t.passenger_id = (
+  SELECT passenger_id
+  FROM passengers
+  WHERE name = 'Steve Martin'
+) AND f.to_id = (
+  SELECT id
+  FROM airports
+  WHERE city = 'London'
+);
+SELECT DISTINCT p.name
+FROM products AS p
+JOIN purchases AS pur ON p.product_id = pur.product_id
+WHERE p.name = 'potato'
+INTERSECT
+SELECT r.member_id
+FROM relations AS r
+WHERE r.type = 'family';
+SELECT p.name
+FROM persons AS p
+WHERE p.rel_id IN (
+  SELECT rel_id
+  FROM relations
+  WHERE type = 'mother'
+);
